@@ -49,7 +49,7 @@ alt.themes.enable("dark")
 
 # Charger les données
 try:
-    df = pd.read_csv('bank-additional-full.csv', delimiter=';')
+    df = pd.read_csv('bank-additional.csv', delimiter=';')
 except Exception as e:
     st.error(f"Une erreur est survenue : {e}")
     st.stop()
@@ -156,20 +156,6 @@ with st.sidebar:
     if st.button("Conclusion", use_container_width=True, on_click=set_page_selection, args=('conclusion',)):
         pass
 
-    # Détails du projet
-    st.subheader("Résumé")
-    st.markdown("""
-        Un tableau de bord interactif pour explorer et classifier les données d'une campagne marketing bancaire.
-
-        -  [Jeu de Données](https://archive.ics.uci.edu/ml/datasets/Bank+Marketing)
-        -  [Notebook Google Colab](https://colab.research.google.com/drive/1KJDBrx3akSPUW42Kbeepj64ZisHFD-NV?usp=sharing)
-        -  [Dépôt GitHub](https://github.com/teguegni/bank-additionnal-full/Streamlit-Bank-Classification-Dashboard)
-
-        Auteur : [`MIMBANG HEDDY`](https://jcdiamante.com)
-    """)
-
-# -------------------------
-
 # Charger les données
 try:
     df = pd.read_csv('bank-additional-full.csv', delimiter=';')
@@ -193,9 +179,9 @@ if st.session_state.page_selection == 'a_propos':
         - Python (Streamlit, Altair, Pandas)
         - Machine Learning (Scikit-learn)
 
-        Auteur : Kenfack Teguegni Junior
+        Auteur : MIMBANG HEDDY
 
-        ✉️ Contact : kenfackteguegni@gmail.com
+        ✉️ Contact : heddy_mimbang@icloud.com
     """)
 elif st.session_state.page_selection == 'conclusion':
      # Page À Propos
@@ -292,21 +278,21 @@ elif st.session_state.page_selection == 'apprentissage_automatique':
     print(df.columns)
  # numérisation des valeurs catégorielles 
     import pandas as pd  
-    from sklearn.preprocessing import LabelEncoder  
-    label_encoder = LabelEncoder()  
-    df['job'] = label_encoder.fit_transform(df['job'])  
-    df['marital'] = label_encoder.fit_transform(df['marital'])    
-    df['education'] = label_encoder.fit_transform(df['education'])  
-    df['default'] = label_encoder.fit_transform(df['default'])
-    df['housing'] = label_encoder.fit_transform(df['housing'])
-    df['loan'] = label_encoder.fit_transform(df['loan'])
-    df['contact'] = label_encoder.fit_transform(df['contact'])
-    df['month'] = label_encoder.fit_transform(df['month'])
-    df['day_of_week'] = label_encoder.fit_transform(df['day_of_week'])
-    df['poutcome'] = label_encoder.fit_transform(df['poutcome'])
-    # Définir X (caractéristiques) et y (cible)
-    X = df[['age', 'duration', 'campaign']]  # Remplacez par vos colonnes pertinentes
-    y = df['y'].map({'yes': 1, 'no': 0})  # Convertir la cible en numérique
+    # Encodage des variables catégorielles avec pd.get_dummies (One-Hot Encoding)
+    df_encoded = pd.get_dummies(df, drop_first=True)
+
+    # Vérifier les données encodées
+    df_encoded.head()
+
+    # Vérification des valeurs manquantes
+    df_encoded.isnull().sum()
+
+    # Remplissage des valeurs manquantes
+    df_encoded.fillna(df_encoded.mean(), inplace=True)
+
+# Séparation des variables indépendantes (X) et de la cible (y)
+X = df_encoded.drop(columns=['y_yes'])  # 'y_yes' étant la variable binaire (1 ou 0)
+y = df_encoded['y_yes']  # La cible
 
     # Diviser les données en ensembles d'entraînement et de test
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
