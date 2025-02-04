@@ -290,20 +290,26 @@ elif st.session_state.page_selection == 'apprentissage_automatique':
 X = df_encoded.drop(columns=['y_yes'])  # 'y_yes' étant la variable binaire (1 ou 0)
 y = df_encoded['y_yes']  # La cible
 
-    # Diviser les données en ensembles d'entraînement et de test
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+  from sklearn.model_selection import train_test_split
 
+# Diviser les données en ensemble d'entraînement et ensemble de test
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
     # Entraîner un modèle simple pour tester
     model = RandomForestClassifier()
     model.fit(X_train, y_train)
 
-        # Tester une prédiction
-    prediction = model.predict(X_test)
-    print(prediction[:5])  # Afficher les premières prédictions
+    # Choisir le modèle Random Forest pour la classification
+from sklearn.ensemble import RandomForestClassifier
 
-    # Création et entraînement du modèle
-    model = RandomForestClassifier(n_estimators=100, random_state=42)
-    model.fit(X_train, y_train)
+    # Créer le modèle 
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+    
+    # Entrainer le modèle
+model.fit(X_train, y_train)
+
+    # Prédire les classes de l'ensemble de test
+y_pred = model.predict(X_test)
+
     from sklearn.utils import resample  
 
     # Concatenation des données d'origine  
