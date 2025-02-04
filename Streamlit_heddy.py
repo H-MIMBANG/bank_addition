@@ -115,7 +115,6 @@ if st.session_state.page_selection == 'jeu_de_donnees':
             color='y'
         ).
 
-Miguel, [04/02/2025 08:12]
 interactive(), use_container_width=True)
 
 # ... [Le reste des pages reste inchangé] ...
@@ -209,7 +208,6 @@ elif st.session_state.page_selection == 'analyse_exploratoire':
     import seaborn as sns  # Importation de seaborn
     import matplotlib.
 
-Miguel, [04/02/2025 08:12]
 pyplot as plt  # Importation de matplotlib.pyplot
     import altair as alt
 
