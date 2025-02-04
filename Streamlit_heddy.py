@@ -313,7 +313,6 @@ y = df_encoded['y_yes']  # La cible
 
     # Séparez les classes
 
-Miguel, [04/02/2025 08:12]
 no_class = data[data['y'] == 0]  # Classe majoritaire  
     yes_class = data[data['y'] == 1]  # Classe minoritaire  
 
